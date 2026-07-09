@@ -1,0 +1,23 @@
+{
+  "image": "/home/Phil/Codex-Projects/Pickart_Website_Redesign/CAMPAIGN_ASSETS/Beatles_TYLS/mockups/blank_interiors/gallery-apartment-jack-russell-blank-frame-01.png",
+  "artwork": "/home/Phil/Codex-Projects/Pickart_Website_Redesign/CAMPAIGN_ASSETS/Beatles_TYLS/enhanced/john-lennon_square.jpg",
+  "artwork_area": [
+    [
+      571,
+      246
+    ],
+    [
+      951,
+      246
+    ],
+    [
+      951,
+      532
+    ],
+    [
+      571,
+      532
+    ]
+  ],
+  "notes": "Straight-on inner visible artwork aperture inside the mat. Composite preserves source artwork pixels aside from scaling/cropping."
+}

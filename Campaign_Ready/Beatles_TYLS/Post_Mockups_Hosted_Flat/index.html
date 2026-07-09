@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beatles TYLS Social Post Mockups</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --ink: #191919;
+      --muted: #656565;
+      --line: #dedbd5;
+      --paper: #f6f3ee;
+      --card: #ffffff;
+      --accent: #7d1f1f;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+
+    header {
+      padding: 32px clamp(18px, 4vw, 48px);
+      background: #151515;
+      color: #f8f5ef;
+    }
+
+    h1, h2, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 700;
+    }
+
+    header p {
+      max-width: 880px;
+      margin-top: 10px;
+      color: #d8d1c7;
+      font-size: 16px;
+    }
+
+    main {
+      width: min(1540px, 100%);
+      margin: 0 auto;
+      padding: 28px clamp(14px, 3vw, 36px) 52px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .controls button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .controls button.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .post-set {
+      margin-bottom: 38px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .post-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .post-heading h2 { font-size: 20px; }
+
+    .post-heading span {
+      color: var(--muted);
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: minmax(300px, 420px) minmax(360px, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .phone,
+    .fb-card {
+      background: var(--card);
+      border: 1px solid #d7d7d7;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .phone {
+      width: min(420px, 100%);
+      margin: 0 auto;
+    }
+
+    .ig-top,
+    .fb-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .ig-top { border-bottom: 1px solid #ececec; }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #111;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      flex: 0 0 auto;
+    }
+
+    .ig-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+    }
+
+    .ig-actions {
+      padding: 10px 14px 0;
+      font-size: 20px;
+      letter-spacing: 8px;
+    }
+
+    .caption,
+    .fb-caption {
+      white-space: pre-line;
+    }
+
+    .caption {
+      padding: 10px 14px 16px;
+      font-size: 13px;
+    }
+
+    .handle { font-weight: 700; }
+
+    .fb-time {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .fb-caption {
+      padding: 0 16px 14px;
+      font-size: 14px;
+    }
+
+    .fb-image {
+      width: 100%;
+      max-height: 620px;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+      border-top: 1px solid #ececec;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .fb-link {
+      padding: 12px 16px;
+      background: #f2f3f5;
+      border-bottom: 1px solid #e1e1e1;
+    }
+
+    .fb-link small {
+      display: block;
+      color: #606770;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .fb-link strong {
+      display: block;
+      margin-top: 3px;
+      font-size: 16px;
+    }
+
+    .fb-reactions {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .mockup-grid { grid-template-columns: 1fr; }
+      .post-heading { display: block; }
+      .post-heading span {
+        display: block;
+        margin-top: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Beatles TYLS Social Post Mockups</h1>
+    <p>Hosted Instagram and Facebook previews for review. All posts link to https://www.pickart.co.uk/tyls/.</p>
+  </header>
+
+  <main>
+    <div class="controls" id="filters"></div>
+    <section id="mockups"></section>
+  </main>
+
+  <script>
+    const link = 'https://www.pickart.co.uk/tyls/';
+const captions = {
+      beatles: `Before America saw them, Britain had already lost its head.
+
+15 December 1963. Alpha/ATV Studios, Birmingham. The Beatles close Thank Your Lucky Stars with "She Loves You", while fans wait outside in the snow.
+
+This is not nostalgia after the fact. It is the moment just before the blast radius widened: four young men in suits, still close enough to the start to feel real.
+
+A PickArt Archive Limited 100 print, numbered and authenticated. 51 remain. Shown framed for inspiration; delivered free worldwide in an archival protective tube, ready to frame your way.`,
+
+      john: `John Lennon, caught in the last weeks before Beatlemania went worldwide.
+
+15 December 1963, Birmingham. Lennon is on the Thank Your Lucky Stars stage with The Beatles, pushing "She Loves You" into Britain's living rooms.
+
+The face is still young. The attitude is already there: sharp, funny, impatient, impossible to file neatly away. Within weeks, America would know it too.
+
+A PickArt Archive Limited 100 print, numbered and authenticated. 58 remain. Shown framed for inspiration; delivered free worldwide in an archival protective tube, ready to frame your way.`,
+
+      paul: `Paul McCartney, December 1963: the smile before the world rushed the stage.
+
+Thank Your Lucky Stars catches Paul on the edge of The Beatles' first great explosion: Liverpool charm, clean suit, and that easy musical confidence already in place.
+
+The song is "She Loves You". The country is watching. America is just over the horizon.
+
+A PickArt Archive Limited 100 print, numbered and authenticated. 55 remain. Shown framed for inspiration; delivered free worldwide in an archival protective tube, ready to frame your way.`,
+
+      ringo: `Ringo Starr at the back, holding the whole thing together.
+
+He had joined in 1962. By this December 1963 performance, The Beatles had become the four-piece the world would remember.
+
+In the middle of the noise, Ringo gives it shape: swing, snap, steadiness, and the grin that made the pressure look light.
+
+A PickArt Archive Limited 100 print, numbered and authenticated. 64 remain. Shown framed for inspiration; delivered free worldwide in an archival protective tube, ready to frame your way.`,
+
+      paulGeorge: `Paul and George, side by side before the world made them permanent.
+
+They had known each other since the school bus in Liverpool. Here, at Alpha/ATV Studios in Birmingham, they stand inside the rise as "She Loves You" turns Merseybeat into national obsession.
+
+Paul brings the open charm. George brings the watchful edge. The picture catches the friendship and contrast before history polished it smooth.
+
+A PickArt Archive Limited 100 print, numbered and authenticated. 61 remain. Shown framed for inspiration; delivered free worldwide in an archival protective tube, ready to frame your way.`,
+
+      georgeRingo: `George and Ringo: the quiet edge and the steady pulse of the Fab Four.
+
+On this Thank Your Lucky Stars stage, the front-line frenzy is only half the story. George gives "She Loves You" its bite; Ringo gives it its balance.
+
+The youngest Beatle and the last to join, caught in the moment the chemistry locks.
+
+A PickArt Archive Limited 100 print, numbered and authenticated. 64 remain. Shown framed for inspiration; delivered free worldwide in an archival protective tube, ready to frame your way.`
+    };
+
+    const posts = [
+      { subject: 'The Beatles', variant: 'Coffee shop', image: 'beatles-coffee-shop.webp', source: 'beatles-coffee-shop.png', caption: captions.beatles },
+      { subject: 'The Beatles', variant: 'Coffee shop, walnut frame', image: 'beatles-coffee-shop-walnut.webp', source: 'beatles-coffee-shop-walnut.png', caption: captions.beatles },
+      { subject: 'The Beatles', variant: 'Listening room', image: 'the-beatles-listening-room.webp', source: 'the-beatles-listening-room-test-01.png', caption: captions.beatles },
+      { subject: 'The Beatles', variant: 'Yoga room', image: 'the-beatles-yoga-dog.webp', source: 'the-beatles-yoga-dog.png', caption: captions.beatles },
+      { subject: 'The Beatles', variant: 'Yoga room, walnut box frame', image: 'beatles-yoga-dog-box-walnut.webp', source: 'beatles-yoga-dog-box-walnut.png', caption: captions.beatles },
+      { subject: 'The Beatles', variant: 'Rattan room', image: 'the-beatles-rattan-room.webp', source: 'the-beatles-yoga-rattan-cat-test-04-centered.png', caption: captions.beatles },
+      { subject: 'John Lennon', variant: 'Listening room', image: 'john-listening-room.webp', source: 'john-listening-room.png', caption: captions.john },
+      { subject: 'John Lennon', variant: 'Yoga room', image: 'john-yoga-dog.webp', source: 'john-yoga-dog.png', caption: captions.john },
+      { subject: 'Paul McCartney', variant: 'Original marketing room', image: 'paul-marketing-rework.webp', source: 'Paul Marketing Rework.png', caption: captions.paul },
+      { subject: 'Paul McCartney', variant: 'Modern art room', image: 'paul-modern-art-lovers.webp', source: 'paul-modern-art-lovers.png', caption: captions.paul },
+      { subject: 'Ringo Starr', variant: 'Approved room', image: 'ringo-approved-room.webp', source: 'Beatles_TYLS_Ringo_001_approved_image.png', caption: captions.ringo },
+      { subject: 'Paul McCartney and George Harrison', variant: 'Listening nook', image: 'paul-george-listening-nook.webp', source: 'paul-george-listening-nook.png', caption: captions.paulGeorge },
+      { subject: 'Paul McCartney and George Harrison', variant: 'Listening nook, walnut frame', image: 'paul-george-listening-nook-walnut.webp', source: 'paul-george-listening-nook=walnut.png', caption: captions.paulGeorge },
+      { subject: 'George Harrison and Ringo Starr', variant: 'Hallway', image: 'george-ringo-hallway.webp', source: 'george-ringo-hallway.png', caption: captions.georgeRingo },
+      { subject: 'George Harrison and Ringo Starr', variant: 'Hallway, oak box frame', image: 'george-ringo-hallway-box-oak.webp', source: 'george-ringo-hallway-box-oak.png', caption: captions.georgeRingo }
+    ];
+
+    const subjects = ['All', ...new Set(posts.map(post => post.subject))];
+    const filters = document.getElementById('filters');
+    const mockups = document.getElementById('mockups');
+    let activeSubject = 'All';
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function platformCaption(caption) {
+      return `<span class="handle">pickartarchive</span> ${escapeHtml(caption)}`;
+    }
+
+    function renderFilters() {
+      filters.innerHTML = subjects.map(subject => `<button class="${subject === activeSubject ? 'active' : ''}" type="button" data-subject="${escapeHtml(subject)}">${escapeHtml(subject)}</button>`).join('');
+      filters.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', () => {
+          activeSubject = button.dataset.subject;
+          renderFilters();
+          renderPosts();
+        });
+      });
+    }
+
+    function renderPosts() {
+      const visiblePosts = posts.filter(post => activeSubject === 'All' || post.subject === activeSubject);
+      mockups.innerHTML = visiblePosts.map((post, index) => `
+        <article class="post-set">
+          <div class="post-heading">
+            <h2>${escapeHtml(post.subject)} - ${escapeHtml(post.variant)}</h2>
+            <span>Source image: ${escapeHtml(post.source)}</span>
+          </div>
+
+          <div class="mockup-grid">
+            <section class="phone" aria-label="Instagram mockup">
+              <div class="ig-top"><span class="avatar">PA</span><span>pickartarchive</span></div>
+              <img class="ig-image" src="${escapeHtml(post.image)}" alt="${escapeHtml(post.subject)} ${escapeHtml(post.variant)}">
+              <div class="ig-actions">♡ ◇ ↗</div>
+              <div class="caption">${platformCaption(post.caption)}</div>
+            </section>
+
+            <section class="fb-card" aria-label="Facebook mockup">
+              <div class="fb-top">
+                <span class="avatar">PA</span>
+                <span>PickArt Archive<span class="fb-time">Sponsored · Mockup ${index + 1}</span></span>
+              </div>
+              <div class="fb-caption">${escapeHtml(post.caption)}</div>
+              <img class="fb-image" src="${escapeHtml(post.image)}" alt="${escapeHtml(post.subject)} ${escapeHtml(post.variant)}">
+              <div class="fb-link">
+                <small>pickart.co.uk</small>
+                <strong>Reserve Yours</strong>
+              </div>
+              <div class="fb-reactions"><span>Like · Comment · Share</span><span>Limited 100</span></div>
+            </section>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    renderFilters();
+    renderPosts();
+  </script>
+</body>
+</html>

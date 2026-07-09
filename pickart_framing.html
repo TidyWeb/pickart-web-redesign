@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frame It — PickArt Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --charcoal:#1d1a17; --bone:#e8e1d3; --oxblood:#432823; --moss:#49452f;
+  --ink:#211d19; --cream:#f0eadd; --dim-dark:#a89e8f; --dim-light:#7a715f;
+  --brass:#b08d57;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Archivo',sans-serif;font-weight:300;background:var(--charcoal);color:var(--cream);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'EB Garamond',serif;font-weight:400}
+h1{font-size:clamp(2.6rem,6.2vw,5.2rem);line-height:1.06}
+h2{font-size:clamp(2rem,3.8vw,3.2rem);line-height:1.1}
+h3{font-size:1.35rem;line-height:1.2}
+img{display:block;max-width:100%}
+.band{width:100%;padding:6.5rem 0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 5vw}
+.kicker{font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:var(--brass);display:block;margin-bottom:1.6rem}
+.band--charcoal{background:var(--charcoal);color:var(--cream)}
+.band--bone{background:var(--bone);color:var(--ink)}
+.band--oxblood{background:var(--oxblood);color:var(--cream)}
+.band--moss{background:var(--moss);color:var(--cream)}
+/* ---------- nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;
+  align-items:center;gap:clamp(2rem,4vw,4.8rem);
+  min-height:142px;padding:1.65rem 5.2vw 2.2rem;
+  background:linear-gradient(to bottom,rgba(29,26,23,.9) 0%,
+    rgba(29,26,23,.56) 50%,rgba(29,26,23,0) 100%)}
+.navlogo{display:flex;align-items:center;gap:1rem;min-width:max-content}
+.navlogo img{height:108px;width:auto;display:block;
+  filter:drop-shadow(0 18px 24px rgba(0,0,0,.46))}
+.brand-lockup{display:flex;align-items:baseline;gap:.72rem;
+  font-family:'EB Garamond',serif;color:var(--cream);
+  line-height:1;text-shadow:0 2px 14px rgba(0,0,0,.5);
+  white-space:nowrap}
+.brand-name{font-size:clamp(2.15rem,3vw,3.2rem);letter-spacing:.035em}
+.brand-archive{font-size:clamp(.98rem,1.08vw,1.2rem);
+  letter-spacing:.28em;text-transform:uppercase;color:var(--cream);opacity:.94}
+.brand-ornament{width:46px;height:1px;background:var(--brass);
+  opacity:.76;position:relative;flex:0 0 auto;align-self:center}
+.brand-ornament::after{content:"";position:absolute;right:-8px;top:50%;
+  width:6px;height:6px;border:1px solid var(--brass);
+  transform:translateY(-50%) rotate(45deg)}
+.brand-ornament.left::after{right:auto;left:-8px}
+nav ul{display:flex;align-items:baseline;align-self:center;gap:clamp(1.35rem,2.25vw,3rem);
+  list-style:none;margin-left:auto;font-family:'EB Garamond',serif;
+  font-size:clamp(.88rem,.92vw,1.05rem);line-height:1;
+  letter-spacing:.16em;text-transform:uppercase;color:rgba(240,234,221,.9);
+  text-shadow:0 2px 12px rgba(0,0,0,.45)}
+nav ul a:hover{color:var(--cream)}
+nav a,.navlogo{color:var(--cream);text-decoration:none}
+nav ul a{color:rgba(240,234,221,.9);text-decoration:none}
+/* ---------- manifesto band ---------- */
+.manifesto{padding-top:11rem}
+.manifesto .cols{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3.5rem}
+.manifesto p{font-size:1.15rem;line-height:1.8;color:var(--dim-dark);margin-bottom:1.4rem}
+.manifesto p strong{color:var(--cream);font-weight:400}
+.rule-line{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--cream);border-left:1px solid var(--brass);padding-left:1.6rem;margin-top:2.4rem}
+/* ---------- visualiser layout ---------- */
+.vis{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:2.6rem;margin-top:3rem;align-items:start}
+.stage{position:relative;aspect-ratio:4/3;background-color:#cfc7b6;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.6);perspective:900px;perspective-origin:90% 50%}
+.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform-origin:100% 50%;transform-style:preserve-3d;transition:transform .3s ease-out;will-change:transform}
+.wall{position:absolute;top:-30%;bottom:-30%;left:-85%;right:0;z-index:0;background-color:#cfc7b6;background-repeat:repeat}
+.scene .frame{z-index:1}
+.stage-note{position:absolute;bottom:.9rem;right:1.1rem;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);mix-blend-mode:difference;pointer-events:none}
+/* ---------- the frame ---------- */
+.frame{position:relative;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.35),0 34px 60px -18px rgba(0,0,0,.5);transition:box-shadow .2s ease-out}
+.fs{position:absolute;z-index:2}
+.fs-t{top:0;left:0;right:0;height:var(--fw);clip-path:polygon(0 0,100% 0,calc(100% - var(--fw)) 100%,var(--fw) 100%)}
+.fs-b{bottom:0;left:0;right:0;height:var(--fw);clip-path:polygon(var(--fw) 0,calc(100% - var(--fw)) 0,100% 100%,0 100%)}
+.fs-l{top:0;bottom:0;left:0;width:var(--fw);clip-path:polygon(0 0,100% var(--fw),100% calc(100% - var(--fw)),0 100%)}
+.fs-r{top:0;bottom:0;right:0;width:var(--fw);clip-path:polygon(0 var(--fw),100% 0,100% 100%,0 calc(100% - var(--fw)))}
+.frame-body{position:relative;z-index:1;padding:var(--fw)}
+.glass{position:absolute;inset:var(--fw);z-index:3;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.12),rgba(255,255,255,0) 46%)}
+.mat{position:relative;padding:var(--mw);background:var(--matcol);box-shadow:inset 0 2px 10px rgba(0,0,0,.22)}
+.sheet{position:relative;width:var(--sw);height:var(--sw);background:#f7f5ef;display:flex;align-items:center;justify-content:center}
+.mount-window .sheet{box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.mount-double .sheet{box-shadow:0 0 0 var(--rv,10px) var(--innermat,#fff),0 0 0 calc(var(--rv,10px) + 1px) rgba(0,0,0,.15)}
+.mount-float .sheet{box-shadow:0 5px 14px rgba(0,0,0,.38)}
+.mount-raised .sheet{box-shadow:0 14px 30px rgba(0,0,0,.48),0 4px 10px rgba(0,0,0,.3)}
+.sheet #printImg{width:88%;height:88%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+</style>
+</head>
+<body>
+<style>
+/* ---------- sheet margin details ---------- */
+.sheet-meta{position:absolute;bottom:2%;left:6%;right:6%;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.ed-line{font-family:'EB Garamond',serif;font-style:italic;font-size:.6rem;color:#8a8478;letter-spacing:.06em}
+.emboss-mark{width:1.5em;height:auto;opacity:.5;filter:grayscale(1) brightness(1.75) contrast(.65) drop-shadow(0 .5px 0 rgba(255,255,255,.95)) drop-shadow(0 -.5px .5px rgba(0,0,0,.22))}
+.sheet-empty{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--dim-light);text-align:center}
+/* ---------- controls ---------- */
+.controls{display:flex;flex-direction:column;gap:1.9rem}
+.ctl-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dim-light);display:flex;justify-content:space-between;margin-bottom:.7rem}
+.ctl-label .val{color:var(--ink);letter-spacing:.12em}
+.chips{display:flex;flex-wrap:wrap;gap:.55rem}
+.chip{width:42px;height:42px;border-radius:50%;border:1px solid rgba(33,29,25,.25);cursor:pointer;background-size:cover;background-position:center;padding:0;position:relative}
+.chip.on{outline:2px solid var(--brass);outline-offset:3px}
+.chip[title]:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.35rem .6rem;white-space:nowrap;z-index:20}
+.chip--frame{border-radius:4px}
+input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:1px;background:rgba(33,29,25,.35);outline:none}
+input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--bone);border:1.5px solid var(--brass);cursor:pointer}
+input[type=range]:disabled{opacity:.3}
+.seg{display:flex;border:1px solid rgba(33,29,25,.3)}
+.seg button{flex:1;background:none;border:none;padding:.65rem 0;font-family:'Archivo',sans-serif;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim-light);cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--cream)}
+.seg--grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.seg--grid button{border-top:1px solid rgba(33,29,25,.15)}
+.seg--grid button:nth-child(-n+3){border-top:none}
+.ctl-head{font-family:'EB Garamond',serif;font-size:1.15rem;color:var(--ink);border-top:1px solid rgba(33,29,25,.25);padding-top:1.5rem;margin-bottom:-0.6rem}
+.ctl-note{font-size:.66rem;line-height:1.5;color:var(--dim-light);margin-top:.55rem}
+.ctl-note a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--brass)}
+.btn{display:inline-block;background:none;border:1px solid var(--brass);color:inherit;font-family:'Archivo',sans-serif;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;padding:1rem 1.6rem;cursor:pointer;text-align:center;transition:background .3s,color .3s}
+.btn:hover{background:var(--brass);color:var(--charcoal)}
+.btn--solid{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+.btn--solid:hover{background:var(--brass);border-color:var(--brass);color:var(--charcoal)}
+.vis-foot{margin-top:1.6rem;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim-light)}
+</style>
+<style>
+/* ---------- picker ---------- */
+.picker{position:fixed;inset:0;z-index:100;background:rgba(29,26,23,.92);display:none;align-items:center;justify-content:center;padding:5vh 5vw}
+.picker.open{display:flex}
+.picker-panel{max-width:960px;width:100%;max-height:90vh;overflow-y:auto;padding:3rem}
+.picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.4rem;margin-top:2rem}
+.pick{background:none;border:none;cursor:pointer;text-align:left;padding:0}
+.pick img{aspect-ratio:1/1;width:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(.9);transition:filter .35s,transform .35s}
+.pick:hover img{filter:grayscale(1) contrast(1.05) brightness(1.05);transform:scale(1.03)}
+.pick .pname{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--cream);margin-top:.7rem}
+.pick .ped{font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);margin-top:.3rem}
+.picker-close{position:absolute;top:1.6rem;right:2rem;background:none;border:none;color:var(--cream);font-size:1.6rem;cursor:pointer;font-family:'EB Garamond',serif}
+/* ---------- education band ---------- */
+.edu-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:3.4rem}
+.edu-cols h3{color:var(--cream);margin-bottom:1.1rem}
+.edu-cols p{font-size:.95rem;line-height:1.75;color:var(--dim-dark)}
+.edu-cols .edu-rule{display:block;margin-top:1.3rem;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--brass)}
+.band--cream{background:var(--cream);color:var(--ink)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3.2rem}
+.split img{width:100%;height:auto;box-shadow:0 24px 50px -16px rgba(0,0,0,.4)}
+.band--cream .split{grid-template-columns:1.5fr 1fr;gap:4.5rem}
+.band--oxblood .split{grid-template-columns:1fr 1.5fr;gap:3rem}
+.split p{margin-bottom:1.3rem;line-height:1.8;font-size:1.1rem}
+.split .edu-rule{display:block;margin-top:1.6rem;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--brass)}
+/* ---------- brief band ---------- */
+.brief-band .cols{display:grid;grid-template-columns:1.2fr .8fr;gap:4rem;align-items:center;margin-top:3rem}
+.brief-band p{font-size:1rem;line-height:1.75;color:var(--dim-light);margin-bottom:1.3rem}
+.brief-band p strong{color:var(--ink);font-weight:400}
+/* ---------- footer ---------- */
+footer{padding:4rem 5vw;display:flex;justify-content:space-between;align-items:center}
+footer .fmark{font-family:'EB Garamond',serif;font-size:1.1rem}
+footer .fsmall{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim-dark)}
+@media(max-width:900px){.vis{grid-template-columns:1fr}.manifesto .cols,.edu-cols,.brief-band .cols,.split{grid-template-columns:1fr;gap:2rem}.stage{aspect-ratio:1/1}}
+/* ---------- coming soon modal ---------- */
+#pa-soon{display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(29,26,23,.78);align-items:center;justify-content:center}
+#pa-soon.open{display:flex}
+#pa-soon-panel{background:var(--charcoal);border:1px solid var(--brass);
+  padding:3rem 3.5rem;max-width:380px;text-align:center}
+#pa-soon-panel p{font-family:'EB Garamond',serif;font-size:1.35rem;
+  color:var(--cream);line-height:1.5;margin-bottom:1.8rem}
+#pa-soon-panel span{display:block;font-size:.62rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:2rem}
+#pa-soon-close{background:none;border:1px solid var(--brass);color:var(--cream);
+  font-family:'Archivo',sans-serif;font-size:.62rem;letter-spacing:.28em;
+  text-transform:uppercase;padding:.8rem 1.8rem;cursor:pointer}
+#pa-soon-close:hover{background:var(--brass);color:var(--charcoal)}
+</style>
+<style>
+/* ---------- the framer's brief (print only) ---------- */
+#brief{display:none}
+@media print{
+  body>*:not(#brief){display:none!important}
+  body{background:#fff;color:#1d1a17}
+  #brief{display:block;font-family:'Archivo',sans-serif;font-weight:300;color:#1d1a17;padding:2rem 1rem}
+  #brief h1{font-family:'EB Garamond',serif;font-size:2rem;margin-bottom:.4rem}
+  #brief .b-kick{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#8a6f45;margin-bottom:2rem;display:block}
+  #brief table{width:100%;border-collapse:collapse;margin:1.5rem 0}
+  #brief td{padding:.7rem 0;border-bottom:1px solid #ddd;font-size:.92rem;vertical-align:top}
+  #brief td:first-child{width:34%;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:#7a715f;padding-top:.95rem}
+  #brief .b-inst{border:1px solid #1d1a17;padding:1.2rem 1.4rem;margin:1.4rem 0;font-size:.95rem;line-height:1.7}
+  #brief .b-inst strong{font-weight:500}
+  #brief .b-foot{display:flex;justify-content:space-between;align-items:center;margin-top:2.6rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:#7a715f}
+  #brief .b-emboss{width:52px;height:auto;opacity:.75;filter:grayscale(1)}
+}
+</style>
+
+<nav>
+  <a class="navlogo" href="pickart_home.html" aria-label="PickArt Archive home">
+    <img src="CAMPAIGN_ASSETS/Ornate_Pick_clean_edge_transparent.png" alt="PickArt">
+    <span class="brand-ornament left" aria-hidden="true"></span>
+    <span class="brand-lockup">
+      <span class="brand-name">PickArt</span>
+      <span class="brand-archive">Archive</span>
+    </span>
+    <span class="brand-ornament" aria-hidden="true"></span>
+  </a>
+  <ul>
+    <li><a href="pickart_tyls.html">Collection</a></li>
+    <li><a href="pickart_tyls.html">Thank Your Lucky Stars</a></li>
+    <li><a href="#">The Limited 100</a></li>
+    <li><a href="pickart_framing.html">Framing Gallery</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============ BAND 1 · CHARCOAL · MANIFESTO ============ -->
+<section class="band band--charcoal manifesto">
+  <div class="wrap">
+    <span class="kicker">Framing · A Position</span>
+    <h1>We don't frame.<br>Deliberately.</h1>
+    <div class="cols">
+      <div>
+        <p><strong>The first reason is physics.</strong> A framed print travels under glass, and glass breaks. When it breaks in transit it does not break politely — it cuts the print it was fitted to protect. No courier can promise otherwise, and no amount of packaging changes this. An unframed print, rolled in an archival tube, arrives exactly as it left.</p>
+      </div>
+      <div>
+        <p><strong>The second is craft.</strong> Framing is not the lithographer's trade. Our work ends at the edge of the sheet. Framing belongs to your local framer — a discipline with its own apprenticeships, its own tools, its own judgement. A good framer sees your print, your wall, and your light before cutting a single mitre. We can see none of those from here.</p>
+        <p class="rule-line">So we built this room instead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAND 2 · BONE · THE VISUALISER ============ -->
+<section class="band band--bone" id="visualiser">
+  <div class="wrap" style="max-width:1360px">
+    <span class="kicker">The Framing Room</span>
+    <h2>Try it on the wall.</h2>
+    <div class="vis">
+      <div class="stage" id="stage">
+        <div class="scene" id="scene">
+        <div class="wall" id="wall"></div>
+        <figure class="frame" id="frame" title="Click to choose a print">
+          <div class="fs fs-t" id="fsT"></div>
+          <div class="fs fs-b" id="fsB"></div>
+          <div class="fs fs-l" id="fsL"></div>
+          <div class="fs fs-r" id="fsR"></div>
+          <div class="frame-body">
+            <div class="mat" id="mat">
+              <div class="sheet" id="sheet">
+                <span class="sheet-empty" id="sheetEmpty">Select a print</span>
+                <img id="printImg" alt="" style="display:none">
+                <div class="sheet-meta" id="sheetMeta" style="display:none">
+                  <img class="emboss-mark" src="CAMPAIGN_ASSETS/Ornate_Pick_clean_edge_transparent.png" alt="PickArt blind emboss">
+                  <span class="ed-line">№ — / 100</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="glass"></div>
+        </figure>
+        </div>
+        <span class="stage-note">Preview · colours indicative</span>
+      </div>
+      <aside class="controls">
+        <div>
+          <div class="ctl-label"><span>The Wall</span><span class="val" id="wallName">Bone</span></div>
+          <div class="chips" id="wallChips"></div>
+        </div>
+        <div>
+          <div class="ctl-label"><span>The Frame</span><span class="val" id="frameName">Medium Oak</span></div>
+          <div class="chips" id="frameChips"></div>
+        </div>
+        <div>
+          <div class="ctl-label"><span>Profile</span></div>
+          <div class="seg" id="profileSeg">
+            <button data-profile="flat" class="on">Flat</button>
+            <button data-profile="shaped">Shaped</button>
+          </div>
+          <p class="ctl-note">Two profiles preview here. Thousands exist — see Mainline's <a href="https://mainlinemouldings.com/gallery/" target="_blank" rel="noopener">gallery</a> and <a href="https://mainlinemouldings.com/wood-mouldings/wood-mouldings/?limit=50" target="_blank" rel="noopener">wood mouldings</a>, then talk to your framer.</p>
+        </div>
+        <div>
+          <div class="ctl-label"><span>Frame width</span><span class="val" id="fwVal">35 mm</span></div>
+          <input type="range" id="fwSlider" min="10" max="90" step="5" value="35">
+        </div>
+        <div class="ctl-head">Mounts</div>
+        <div>
+          <div class="ctl-label"><span>Mount style</span></div>
+          <div class="seg seg--grid" id="mountSeg">
+            <button data-mount="none">None</button>
+            <button data-mount="window" class="on">Window</button>
+            <button data-mount="double">Double</button>
+            <button data-mount="float">Float</button>
+            <button data-mount="raised">Raised float</button>
+          </div>
+        </div>
+        <div>
+          <div class="ctl-label"><span>Mat width</span><span class="val" id="mwVal">60 mm</span></div>
+          <input type="range" id="mwSlider" min="20" max="100" step="5" value="60">
+        </div>
+        <div>
+          <div class="ctl-label"><span>Mat colour</span><span class="val" id="matName">White</span></div>
+          <div class="chips" id="matChips"></div>
+        </div>
+        <button class="btn" id="pickBtn">Choose a print</button>
+        <button class="btn btn--solid" id="briefBtn">Print the Framer's Brief</button>
+      </aside>
+    </div>
+    <p class="vis-foot">Every print: 50 × 50 cm · Platinum Baryta 300 gsm · Blind-embossed · Shown to scale</p>
+  </div>
+</section>
+<!-- ============ BAND 3 · CREAM · FRAME CHOICES ============ -->
+<section class="band band--cream">
+  <div class="wrap">
+    <span class="kicker">The Frame</span>
+    <h2>Five tones. Two profiles. One judgement.</h2>
+    <div class="split">
+      <img class="frame-shot" src="VISUALS/paul-george-listening-nook=walnut.png" alt="PickArt prints in walnut frames above a listening nook">
+      <div>
+        <p>A frame does not decorate a print. It ends it — a hard line between the work and the wall. The visualiser above holds the choice to what matters at this stage: five tones from black to white, a face from 10 to 90 millimetres, and a profile that is either flat or shaped.</p>
+        <p>The full field is wider than any preview can hold. Thousands of mouldings exist, and the right one depends on your print, your wall, and your light — three things only your framer can see. Take the tone and width you settled here; let the framer put a specific moulding in your hands.</p>
+        <p>One choice belongs to the glazing, not the wood. An archival print deserves UV-filtering glass or acrylic — it blocks the light that fades ink over decades. Non-reflective finishes trade a little crispness for a lot less glare, a judgement made in the room where the print will hang.</p>
+        <span class="edu-rule">Ask for UV-filtering. Ask for spacers.</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ BAND 4 · OXBLOOD · MATTING CHOICES ============ -->
+<section class="band band--oxblood">
+  <div class="wrap">
+    <span class="kicker">The Mount</span>
+    <h2>Five ways to hold a sheet.</h2>
+    <div class="split">
+      <div>
+        <p>A mount does two jobs. It gives the image room to breathe, and it holds the print away from the glazing so the surface never touches glass. A window mat overlaps the sheet by a few millimetres on each side. A double mat steps two boards, a narrow reveal of the second colour ringing the window — depth measured in millimetres.</p>
+        <p>Float mounting reverses the logic. The whole sheet sits proud of the backing, every edge visible, a fine shadow beneath. A raised float lifts it further on a concealed riser, deepening that shadow to a drawn line. It is the right treatment when the margin carries the things that make the print what it is — the stamp, the number. Nothing is covered. Nothing is trimmed.</p>
+        <p>Every board is acid-free museum stock, hinged with acid-free tape, never dry-mounted. Whatever the style, one rule stands for a PickArt print: the embossing and edition number stay in view. That mark is the print's proof.</p>
+        <span class="edu-rule">Ink can be copied. An embossing cannot.</span>
+      </div>
+      <img class="mount-shot" src="VISUALS/john-garden-room.png" alt="A float-mounted PickArt print in a garden room">
+    </div>
+  </div>
+</section>
+<!-- ============ BAND 5 · BONE · THE FRAMER'S BRIEF ============ -->
+<section class="band band--bone brief-band">
+  <div class="wrap">
+    <span class="kicker">The Framer's Brief</span>
+    <h2>You've chosen. Now put it in writing.</h2>
+    <div class="cols">
+      <div>
+        <p>When you finish in the framing room, one click produces the Framer's Brief — a single printed page carrying everything your framer needs: the sheet dimensions, your frame and mat choices, the glazing recommendation, and one instruction that is not optional.</p>
+        <p><strong>Hinge, never dry-mount. The embossing and edition number remain visible.</strong> That mark is the print's proof. A framer who covers it has framed a picture and buried a document.</p>
+        <p>Take the Brief to any framer you trust. They do the part we never could.</p>
+      </div>
+      <div style="text-align:center">
+        <button class="btn btn--solid" onclick="printBrief()">Print the Framer's Brief</button>
+        <p style="margin-top:1.2rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim-light)">Or save as PDF from the print dialog</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="band--charcoal">
+  <span class="fmark">PickArt Archive</span>
+  <span class="fsmall">Own a moment in music history</span>
+</footer>
+
+<!-- ============ PICKER OVERLAY ============ -->
+<div class="picker" id="picker">
+  <button class="picker-close" onclick="closePicker()">✕</button>
+  <div class="picker-panel">
+    <span class="kicker">The Collection</span>
+    <h2 style="color:var(--cream)">Choose your print.</h2>
+    <div class="picker-grid" id="pickerGrid"></div>
+  </div>
+</div>
+<!-- ============ THE FRAMER'S BRIEF (print output) ============ -->
+<div id="brief">
+  <span class="b-kick">PickArt Archive · The Framer's Brief</span>
+  <h1 id="bTitle">—</h1>
+  <table>
+    <tr><td>The print</td><td id="bPrint">—</td></tr>
+    <tr><td>Edition</td><td>The Archive Edition A-100 · print № ______ of 100 <em>(enter your number from the certificate)</em></td></tr>
+    <tr><td>Sheet</td><td>500 × 500 mm · Platinum Baryta 300 gsm · blind-embossed lower margin</td></tr>
+    <tr><td>Frame</td><td id="bFrame">—</td></tr>
+    <tr><td>Frame face width</td><td id="bWidth">—</td></tr>
+    <tr><td>Mount</td><td id="bMount">—</td></tr>
+    <tr><td>Glazing</td><td>UV-filtering glass or acrylic. Spacers if unmatted — the print surface must not touch the glazing.</td></tr>
+  </table>
+  <div class="b-inst">
+    <strong>Mounting instruction — not optional.</strong> Hinge with acid-free tape only. Do not dry-mount, heat-press, or trim the sheet. The blind embossing and edition number in the margin must remain visible in the finished frame. The embossing is the print's proof of authenticity.
+  </div>
+  <div class="b-foot">
+    <span>pickart.co.uk · PickArt Gallery, Kingfisher Shopping Centre, Redditch B97 4HJ</span>
+    <img class="b-emboss" src="CAMPAIGN_ASSETS/Ornate_Pick_clean_edge_transparent.png" alt="PickArt emboss mark">
+  </div>
+</div>
+<script>
+/* ================= DATA ================= */
+/* Wall: ONE plaster texture, tinted per colour with background-blend-mode.
+   Texture supplies depth, colour supplies mood. Pale shades use soft-light
+   (multiply muddies them); mids and deeps use multiply.
+   PRODUCTION: move plaster JPG to /wp-content/uploads/frame-it/. */
+const PLASTER={f:'Wall Textures/textured-plaster-1248-mm-architextures.jpg', mm:1248};
+const WALLS=[
+ {name:'Bone',            hex:'#e6dfd0', blend:'soft-light'},
+ {name:'Cream',           hex:'#efe8d8', blend:'soft-light'},
+ {name:'Plaster Pink',    hex:'#d9bfb0', blend:'soft-light'},
+ {name:'Sage',            hex:'#a8ad97', blend:'soft-light'},
+ {name:'Study Green',     hex:'#55604e', blend:'multiply'},
+ {name:'Bottle Green',    hex:'#2f3d33', blend:'multiply'},
+ {name:'Powder Blue',     hex:'#b7c4c9', blend:'soft-light'},
+ {name:'Slate Blue',      hex:'#5d707d', blend:'multiply'},
+ {name:'Midnight Blue',   hex:'#26323e', blend:'multiply'},
+ {name:'Picture-Rail Red',hex:'#7d3b32', blend:'multiply'},
+ {name:'Maroon',          hex:'#52262a', blend:'multiply'},
+ {name:'Charcoal',        hex:'#35322d', blend:'multiply'}
+];
+/* Frames: photographic rail textures cropped from supplier corner samples
+   (VISUALS/extract_rails.py). _h tiles along top/bottom rails, _v along
+   left/right, so grain always runs with the rail and mitres read true.
+   PRODUCTION: move VISUALS/frames/ to /wp-content/uploads/frame-it/. */
+const FDIR='VISUALS/frames/';
+const tex=n=>({
+  h:`url("${FDIR}${n}_h.png") left center / auto 100% repeat-x`,
+  v:`url("${FDIR}${n}_v.png") center top / 100% auto repeat-y`
+});
+const FRAMES=[
+ {name:'Black',      ...tex('black')},
+ {name:'Dark Wood',  ...tex('dark_wood')},
+ {name:'Medium Oak', ...tex('med_oak')},
+ {name:'Light Wood', ...tex('light_wood')},
+ {name:'White',      ...tex('white')}
+];
+/* Shaped profile: a scoop light-curve laid over the material, per rail.
+   Outer edge catches light, the scoop shadows mid-face, a soft return
+   highlight, then the sight edge falls dark. Direction flips per side
+   so the section reads consistently around the frame. */
+const scoop=dir=>`linear-gradient(${dir}, rgba(255,255,255,.30) 0%, rgba(255,255,255,.04) 16%, rgba(0,0,0,.24) 46%, rgba(255,255,255,.14) 66%, rgba(0,0,0,.36) 100%)`;
+const SHADE={T:scoop('180deg'),B:scoop('0deg'),L:scoop('90deg'),R:scoop('270deg')};
+const MATS=[
+ {name:'White',   c:'#f6f4ee'},
+ {name:'Antique', c:'#ece4d2'},
+ {name:'Charcoal',c:'#2a2724'},
+ {name:'Black',   c:'#171512'}
+];
+/* Print manifest — comp only. PRODUCTION: replace with WooCommerce
+   Store API fetch (/wp-json/wc/store/v1/products) keyed on ?pid=. */
+const IMGBASE='https://www.pickart.co.uk/wp-content/uploads/';
+const PRINTS=[
+ {id:'bowie',    name:'David Bowie',      f:'2021/01/David-Bowie-001.jpg'},
+ {id:'mercury',  name:'Freddie Mercury',  f:'2020/12/Freddie-Mercury-001.jpg'},
+ {id:'cash',     name:'Johnny Cash',      f:'2021/01/Johnny-Cash-001-scaled.jpg'},
+ {id:'richards', name:'Keith Richards',   f:'2021/01/Keith-Richards-001-scaled.jpg'},
+ {id:'lemmy',    name:'Lemmy',            f:'2020/12/Lemmy-001.jpg'},
+ {id:'ozzy',     name:'Ozzy Osbourne',    f:'2020/12/Ozzy-Osbourne-001.jpg'},
+ {id:'prince',   name:'Prince',           f:'2020/12/Prince-001.jpg'},
+ {id:'dickinson',name:'Bruce Dickinson',  f:'2020/12/Bruce-Dickinson-001-scaled.jpg'}
+];
+/* ================= STATE & RENDER ================= */
+const FILL=0.86;   /* framed piece fills 86% of the stage's short side */
+const SHEET_MM=500;
+const state={wall:0,frame:2,profile:'flat',fw:35,mount:'window',mw:60,mat:0,print:null};
+const $=id=>document.getElementById(id);
+let pxmm=0.5;
+
+function render(){
+  const stage=$('stage');
+  const F=FRAMES[state.frame];
+
+  const matMM=(state.mount==='none'?0:state.mw);
+  const totMM=SHEET_MM+2*matMM+2*state.fw;
+  pxmm=FILL*Math.min(stage.clientWidth,stage.clientHeight)/totMM;
+  const w=WALLS[state.wall];
+  const wall=$('wall');
+  wall.style.backgroundImage=`url("${PLASTER.f}")`;
+  wall.style.backgroundColor=w.hex;
+  wall.style.backgroundBlendMode=w.blend;
+  wall.style.backgroundSize=`${(PLASTER.mm*pxmm).toFixed(1)}px auto`;
+  const fw=state.fw*pxmm, mw=matMM*pxmm, sw=SHEET_MM*pxmm;
+  const fr=$('frame');
+  fr.style.setProperty('--fw',fw.toFixed(1)+'px');
+  fr.style.setProperty('--mw',mw.toFixed(1)+'px');
+  fr.style.setProperty('--sw',sw.toFixed(1)+'px');
+  fr.classList.toggle('mount-window',state.mount==='window'||state.mount==='double');
+  fr.classList.toggle('mount-double',state.mount==='double');
+  fr.classList.toggle('mount-float',state.mount==='float'||state.mount==='raised');
+  fr.classList.toggle('mount-raised',state.mount==='raised');
+  /* double mount: 8 mm inner reveal in the opposing value to the outer mat */
+  fr.style.setProperty('--rv',(8*pxmm).toFixed(1)+'px');
+  fr.style.setProperty('--innermat',['Charcoal','Black'].includes(MATS[state.mat].name)?'#f6f4ee':'#2a2724');
+  const sh=state.profile==='shaped';
+  $('fsT').style.background=(sh?SHADE.T+', ':'')+F.h;
+  $('fsB').style.background=(sh?SHADE.B+', ':'')+F.h;
+  $('fsL').style.background=(sh?SHADE.L+', ':'')+F.v;
+  $('fsR').style.background=(sh?SHADE.R+', ':'')+F.v;
+  const matC=MATS[state.mat].c;
+  $('mat').style.setProperty('--matcol',state.mount==='none'?'transparent':matC);
+  $('mat').style.boxShadow=state.mount==='none'?'none':'inset 0 2px 10px rgba(0,0,0,.22)';
+  /* readouts */
+  $('wallName').textContent=w.name;
+  $('frameName').textContent=F.name;
+  $('fwVal').textContent=state.fw+' mm';
+  $('mwVal').textContent=state.mw+' mm';
+  $('matName').textContent=MATS[state.mat].name;
+  $('mwSlider').disabled=(state.mount==='none');
+  document.querySelectorAll('#mountSeg button').forEach(b=>b.classList.toggle('on',b.dataset.mount===state.mount));
+  document.querySelectorAll('#profileSeg button').forEach(b=>b.classList.toggle('on',b.dataset.profile===state.profile));
+  document.querySelectorAll('#wallChips .chip').forEach((c,i)=>c.classList.toggle('on',i===state.wall));
+  document.querySelectorAll('#frameChips .chip').forEach((c,i)=>c.classList.toggle('on',i===state.frame));
+  document.querySelectorAll('#matChips .chip').forEach((c,i)=>c.classList.toggle('on',i===state.mat));
+  updateBrief();
+}
+/* ================= CONTROL WIRING ================= */
+function buildChips(){
+  WALLS.forEach((w,i)=>{
+    const b=document.createElement('button');
+    b.className='chip'; b.title=w.name;
+    b.style.background=w.hex;   /* flat colour circle — not a texture thumbnail */
+    b.onclick=()=>{state.wall=i;render()};
+    $('wallChips').appendChild(b);
+  });
+  FRAMES.forEach((f,i)=>{
+    const b=document.createElement('button');
+    b.className='chip chip--frame'; b.title=f.name;
+    b.style.background=f.h;   /* chip shows the real material */
+    b.onclick=()=>{state.frame=i;render()};
+    $('frameChips').appendChild(b);
+  });
+  MATS.forEach((m,i)=>{
+    const b=document.createElement('button');
+    b.className='chip'; b.title=m.name;
+    b.style.background=m.c;
+    b.onclick=()=>{state.mat=i;render()};
+    $('matChips').appendChild(b);
+  });
+}
+$('fwSlider').oninput=e=>{state.fw=+e.target.value;render()};
+$('mwSlider').oninput=e=>{state.mw=+e.target.value;render()};
+document.querySelectorAll('#mountSeg button').forEach(b=>{
+  b.onclick=()=>{state.mount=b.dataset.mount;render()};
+});
+document.querySelectorAll('#profileSeg button').forEach(b=>{
+  b.onclick=()=>{state.profile=b.dataset.profile;render()};
+});
+window.addEventListener('resize',render);
+/* One-axis corridor tilt. Y-axis only — no rotateX, no wobble.
+   Pivot is the stage's RIGHT edge (transform-origin:100% 50%), with the
+   perspective origin pulled toward the pivot (90% 50%) for a one-point
+   corridor read: flat when the mouse sits at the right edge; rolling
+   left swings the plane up to 20deg so the LEFT side of the wall — and
+   the frame fixed to it — recedes toward a vanishing point, as if the
+   viewer stepped right and looked down the wall. The oversized .wall
+   child (-85% left overscan) keeps the receding side covered. */
+const stageEl=$('stage'), sceneEl=$('scene'), frameEl=$('frame');
+const MAX_TILT=20;
+/* The frame is FIXED to the wall now, so its shadow must not grow as
+   if lifting off. It rides the plane (box-shadow transforms with the
+   element); we add only a slight deepening with tilt, light from the
+   left. p=0 flat, p=1 full tilt. */
+function castShadow(p){
+  frameEl.style.boxShadow=
+    `${(p*6).toFixed(1)}px ${(3+p*2).toFixed(1)}px ${(8+p*6).toFixed(1)}px rgba(0,0,0,${(.35+p*.08).toFixed(2)}),`+
+    `${(p*14).toFixed(1)}px ${(34+p*4).toFixed(1)}px ${(60+p*12).toFixed(1)}px -18px rgba(0,0,0,${(.5+p*.06).toFixed(2)})`;
+}
+if(window.matchMedia('(pointer:fine)').matches){
+  stageEl.addEventListener('mousemove',e=>{
+    const r=stageEl.getBoundingClientRect();
+    const p=Math.min(Math.max((r.right-e.clientX)/r.width,0),1);
+    sceneEl.style.transform=`rotateY(${(-p*MAX_TILT).toFixed(2)}deg)`;
+    castShadow(p);
+  });
+  stageEl.addEventListener('mouseleave',()=>{
+    sceneEl.style.transform='rotateY(0deg)';
+    castShadow(0);
+  });
+}
+/* ================= PRINT SELECTION ================= */
+function buildPicker(){
+  PRINTS.forEach(p=>{
+    const b=document.createElement('button');
+    b.className='pick';
+    b.innerHTML=`<img loading="lazy" src="${IMGBASE}${p.f}" alt="${p.name}">
+      <div class="pname">${p.name}</div>
+      <div class="ped">The Archive Edition A-100</div>`;
+    b.onclick=()=>selectPrint(p);
+    $('pickerGrid').appendChild(b);
+  });
+}
+function selectPrint(p){
+  state.print=p;
+  $('printImg').src=IMGBASE+p.f;
+  $('printImg').alt=p.name;
+  $('printImg').style.display='block';
+  $('sheetMeta').style.display='flex';
+  $('sheetEmpty').style.display='none';
+  closePicker(); render();
+}
+function openPicker(){$('picker').classList.add('open')}
+function closePicker(){$('picker').classList.remove('open')}
+$('pickBtn').onclick=openPicker;
+$('frame').onclick=()=>{if(!state.print)openPicker()};
+$('picker').onclick=e=>{if(e.target===$('picker'))closePicker()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePicker()});
+/* ================= THE FRAMER'S BRIEF ================= */
+function mountText(){
+  const c=MATS[state.mat].name.toLowerCase();
+  const inner=['Charcoal','Black'].includes(MATS[state.mat].name)?'white':'charcoal';
+  if(state.mount==='none')return 'No mat. Fit spacers — the print surface must not touch the glazing.';
+  if(state.mount==='float')return `Float mount on acid-free backing, full sheet visible, ${state.mw} mm reveal, ${c} board. Edges proud, hairline shadow.`;
+  if(state.mount==='raised')return `Raised float on a concealed riser, full sheet visible, ${state.mw} mm reveal, ${c} board. Sheet lifted approx. 5 mm — deep shadow line, all four edges clear of the backing.`;
+  if(state.mount==='double')return `Double window mat, ${state.mw} mm ${c} over an 8 mm ${inner} reveal, acid-free museum board throughout. Window sized to keep the embossing and edition number visible.`;
+  return `Window mat, ${state.mw} mm, ${c}, acid-free museum board. Window sized to keep the embossing and edition number visible.`;
+}
+function updateBrief(){
+  const p=state.print, F=FRAMES[state.frame];
+  $('bTitle').textContent=p?p.name:'Print not yet selected';
+  $('bPrint').textContent=p?`${p.name} — PickArt Archive, archival pigment print`:'—';
+  $('bFrame').textContent=F.name+' · '+(state.profile==='shaped'?'shaped profile — final moulding chosen with your framer':'flat profile');
+  $('bWidth').textContent=state.fw+' mm face';
+  $('bMount').textContent=mountText();
+}
+function printBrief(){
+  if(!state.print){openPicker();return}
+  window.print();
+}
+$('briefBtn').onclick=printBrief;
+
+/* ================= ENTRY: ?pid= from product pages =================
+   Product page "Frame it" buttons link to /frame-it/?pid={id}.
+   COMP: ids match the manifest. PRODUCTION: pid = WooCommerce product
+   ID, resolved via the Store API. */
+function initFromQuery(){
+  const pid=new URLSearchParams(location.search).get('pid');
+  if(!pid)return;
+  const p=PRINTS.find(x=>x.id===pid);
+  if(p)selectPrint(p);
+}
+
+buildChips(); buildPicker(); initFromQuery(); render();
+</script>
+<div id="pa-soon">
+  <div id="pa-soon-panel">
+    <p>Not part of this preview.</p>
+    <span>This page is being built</span>
+    <button id="pa-soon-close">Close</button>
+  </div>
+</div>
+<script>
+document.querySelectorAll('a[href="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    document.getElementById('pa-soon').classList.add('open');
+  });
+});
+document.getElementById('pa-soon-close').addEventListener('click',function(){
+  document.getElementById('pa-soon').classList.remove('open');
+});
+document.getElementById('pa-soon').addEventListener('click',function(e){
+  if(e.target===this)this.classList.remove('open');
+});
+</script>
+</body>
+</html>

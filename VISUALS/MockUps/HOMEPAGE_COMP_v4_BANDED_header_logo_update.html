@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PickArt Archive — Own a moment in music history</title>
+<!-- COMP v4 "Banded" — 2026-07-06. Design comp only.
+     Structure ref: studioashby.com/sister — full-width colour bands,
+     image-dominant, colour changes as visual relief.
+     Hero: v1 full-bleed McCartney (retained by request).
+     Logos: CAMPAIGN_ASSETS/Ornate_Pick_clean_edge_transparent.png (nav),
+            CAMPAIGN_ASSETS/Logo_Master_White_Trans.png (footer),
+            CAMPAIGN_ASSETS/Emboss_logo.png (the mark, featured).
+     Edition statuses ILLUSTRATIVE, not live stock. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --charcoal:#1d1a17;
+  --bone:#e8e1d3;
+  --bone2:#ded5c2;
+  --oxblood:#432823;
+  --moss:#49452f;
+  --ink:#211d19;
+  --cream:#f0eadd;
+  --dim-dark:#a89e8f;   /* muted text on dark bands */
+  --dim-light:#7a715f;  /* muted text on light bands */
+  --brass:#b08d57;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--charcoal);color:var(--cream);
+  font-family:'Archivo',sans-serif;font-weight:300;line-height:1.65;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:0 6vw}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:'EB Garamond',serif;font-weight:400}
+.kicker{font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--brass)}
+</style>
+<style>
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:grid;
+  grid-template-columns:auto 1fr;column-gap:3.2rem;align-items:center;
+  min-height:158px;padding:2rem 4.8vw 2.2rem;
+  background:linear-gradient(to bottom,rgba(29,26,23,.94) 0%,
+    rgba(29,26,23,.62) 52%,rgba(29,26,23,0) 100%)}
+.navlogo{display:flex;align-items:center;gap:1.15rem;min-width:max-content}
+.navlogo img{height:124px;width:auto;display:block;
+  filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
+.brand-divider,.brand-ornament{display:block;height:1px;background:var(--brass);
+  opacity:.78;position:relative;flex:0 0 auto}
+.brand-divider{width:34px}
+.brand-ornament{width:54px;margin-left:.2rem}
+.brand-divider::before,.brand-ornament::after{content:"";position:absolute;top:50%;
+  width:6px;height:6px;border:1px solid var(--brass);transform:translateY(-50%) rotate(45deg);
+  background:transparent}
+.brand-divider::before{left:-8px}.brand-ornament::after{right:-8px}
+.brand-lockup{display:flex;align-items:baseline;gap:.78rem;white-space:nowrap;
+  font-family:'EB Garamond',serif;color:var(--cream);text-shadow:0 2px 14px rgba(0,0,0,.45)}
+.brand-name{font-size:clamp(2.35rem,3.2vw,3.45rem);line-height:.9;
+  letter-spacing:.035em;font-weight:400}
+.brand-archive{font-size:clamp(1rem,1.15vw,1.28rem);line-height:1;
+  letter-spacing:.28em;text-transform:uppercase;font-weight:400;color:var(--cream);opacity:.93}
+nav ul{display:flex;align-items:center;justify-content:flex-end;
+  gap:clamp(1.45rem,2.4vw,3.2rem);list-style:none;font-family:'EB Garamond',serif;
+  font-size:clamp(.86rem,.86vw,1.02rem);line-height:1;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(240,234,221,.88);font-weight:400;
+  text-shadow:0 2px 12px rgba(0,0,0,.45)}
+nav ul a:hover{color:var(--cream)}
+/* bands */
+.band{padding:8.5rem 0}
+.band.bone{background:var(--bone);color:var(--ink)}
+.band.bone .kicker{color:#8a6d43}
+.band.oxblood{background:var(--oxblood)}
+.band.moss{background:var(--moss)}
+.band.charcoal{background:var(--charcoal)}
+h2{font-size:clamp(2rem,3.8vw,3.2rem);line-height:1.12;margin:1rem 0 1.5rem}
+.lede{font-size:1.02rem;max-width:40em}
+.band .lede{color:var(--dim-dark)}
+.band.bone .lede{color:var(--dim-light)}
+.btn{display:inline-block;margin-top:2.4rem;padding:1.05rem 2.8rem;
+  border:1px solid var(--brass);font-size:.72rem;letter-spacing:.3em;
+  text-transform:uppercase;transition:.3s;color:inherit}
+.btn:hover{background:var(--brass);color:var(--ink)}
+.btn.solid{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.btn.solid:hover{background:var(--brass);color:var(--ink);
+  border-color:var(--brass)}
+/* hero — v1 treatment retained */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;
+  overflow:hidden}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 22%;
+  filter:grayscale(1) contrast(1.06) brightness(.82);z-index:0}
+.hero .scrim{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,#1d1a17 4%,rgba(29,26,23,.5) 40%,rgba(29,26,23,.1) 72%)}
+.hero-inner{position:relative;z-index:2;padding:0 6vw 10vh;max-width:960px}
+.hero h1{font-size:clamp(2.6rem,6.2vw,5.2rem);line-height:1.06;
+  margin:1.1rem 0 1.4rem}
+.hero p{font-size:clamp(1rem,1.6vw,1.25rem);color:var(--dim-dark);
+  max-width:34em}
+.hero .kicker{font-size:clamp(.82rem,1vw,1rem);letter-spacing:.28em;
+  color:#c69a57;font-weight:400;text-shadow:0 2px 12px rgba(0,0,0,.55)}
+</style>
+<style>
+/* bone band: the mark (emboss stamp) + covenant */
+.mark{display:grid;grid-template-columns:.85fr 1.15fr;gap:6rem;
+  align-items:center}
+.mark img{width:100%;max-width:420px;display:block;margin:0 auto;
+  border-radius:50%;
+  box-shadow:0 30px 60px -25px rgba(33,29,25,.4),0 6px 16px rgba(33,29,25,.12)}
+.law{display:inline-block;margin-top:1.8rem;padding-top:1.4rem;
+  border-top:1px solid var(--brass);font-size:.74rem;letter-spacing:.28em;
+  text-transform:uppercase}
+/* oxblood band: current release — image dominates */
+.release{display:grid;grid-template-columns:1.15fr .85fr;gap:5rem;
+  align-items:center}
+.release img{width:100%;display:block;filter:grayscale(1) contrast(1.06);
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.edline{margin:1.8rem 0 .4rem;font-size:.76rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--brass)}
+.venue{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim-dark);margin-top:1rem}
+/* charcoal band: legends grid — big, borderless, edge to edge feel */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem;
+  margin-top:4rem}
+.card{position:relative;overflow:hidden}
+.card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;
+  filter:grayscale(1) contrast(1.05) brightness(.92);transition:.45s}
+.card:hover img{filter:grayscale(1) contrast(1.08) brightness(1.02);
+  transform:scale(1.03)}
+.card .name{font-family:'EB Garamond',serif;font-size:1.2rem;
+  margin-top:1rem}
+.card .st{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--dim-dark);margin-top:.2rem}
+.card .st.low{color:var(--brass)} .card .st.closed{color:#a05a43}
+</style>
+<style>
+/* moss band: in the room */
+.room{display:grid;grid-template-columns:1.05fr .95fr;gap:5rem;
+  align-items:center}
+.room img{width:100%;display:block;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.55)}
+.caption{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim-dark);margin-top:1rem}
+/* bone band 2: craft with watermark stamp */
+.craftband{position:relative;overflow:hidden}
+.craftband .watermark{position:absolute;right:-8%;top:50%;
+  transform:translateY(-50%);width:44vw;max-width:640px;opacity:.06;
+  pointer-events:none}
+.craft{display:grid;grid-template-columns:repeat(3,1fr);gap:3.5rem;
+  margin-top:3.5rem;position:relative;z-index:1}
+.craft h3{font-size:1.5rem;margin-bottom:.8rem}
+.craft h3::before{content:"";display:block;width:2rem;height:1px;
+  background:var(--brass);margin-bottom:1.1rem}
+.craft p{color:var(--dim-light);font-size:.94rem}
+/* list + footer */
+.list{max-width:620px;margin:0 auto;text-align:center}
+.list form{display:flex;margin-top:2.2rem;border:1px solid rgba(240,234,221,.25)}
+.list input{flex:1;background:transparent;border:0;padding:1.1rem 1.3rem;
+  color:var(--cream);font-family:'Archivo';font-size:.95rem;outline:none}
+.list button{background:var(--brass);color:var(--ink);border:0;
+  padding:0 2.4rem;font-size:.7rem;letter-spacing:.26em;
+  text-transform:uppercase;cursor:pointer}
+.small{font-size:.74rem;color:var(--dim-dark);margin-top:1rem}
+.trust{display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:center;
+  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim-dark);padding:2.6rem 6vw;
+  border-top:1px solid rgba(240,234,221,.12)}
+footer{padding:4rem 6vw;border-top:1px solid rgba(240,234,221,.12);
+  display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;
+  font-size:.85rem;color:var(--dim-dark)}
+footer img{height:52px;width:52px;margin-bottom:.8rem}
+@media(max-width:1100px){nav{grid-template-columns:1fr;row-gap:1rem;
+  justify-items:start}nav ul{justify-content:flex-start;flex-wrap:wrap}}
+@media(max-width:900px){.mark,.release,.room{grid-template-columns:1fr;
+  gap:3rem}.grid{grid-template-columns:repeat(2,1fr)}
+  .craft{grid-template-columns:1fr}nav{min-height:112px;padding:1.25rem 6vw}
+  .navlogo img{height:76px}.brand-divider,.brand-ornament{display:none}
+  .brand-name{font-size:2.05rem}.brand-archive{font-size:.82rem;letter-spacing:.22em}
+  nav ul{display:none}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="navlogo" href="#" aria-label="PickArt Archive home">
+    <img src="CAMPAIGN_ASSETS/Ornate_Pick_clean_edge_transparent.png" alt="PickArt">
+    <span class="brand-divider" aria-hidden="true"></span>
+    <span class="brand-lockup"><span class="brand-name">PickArt</span><span class="brand-archive">Archive</span></span>
+    <span class="brand-ornament" aria-hidden="true"></span>
+  </a>
+  <ul>
+    <li><a href="#">Collection</a></li>
+    <li><a href="#">Thank Your Lucky Stars</a></li>
+    <li><a href="#">The Limited 100</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <img class="bg" src="https://www.pickart.co.uk/wp-content/uploads/2026/02/7b939b9f-a3b5-4628-8f50-d8751a27723c-1.jpg" alt="Paul McCartney, 1963">
+  <div class="scrim"></div>
+  <div class="hero-inner">
+    <span class="kicker">Numbered editions of unseen rock photography</span>
+    <h1>Own a moment in<br>music history.</h1>
+    <p>Unseen photographs of the artists who made it. One hundred numbered
+    prints of each image. Then never again.</p>
+    <a class="btn" href="#archive">View the Archive</a>
+  </div>
+</header>
+
+<section class="band bone">
+  <div class="wrap mark">
+    <img src="CAMPAIGN_ASSETS/Emboss_logo.png" alt="The PickArt embossing stamp">
+    <div>
+      <span class="kicker">The Archive Limited 100</span>
+      <h2>One hundred prints.<br>Then the plates are put away.</h2>
+      <p class="lede">Every photograph in the PickArt Archive is released as
+      an edition of one hundred prints. No more. Each print is numbered,
+      from 1 to 100, and pressed with the PickArt emboss — the same mark you
+      see here. It is our signature and your proof: ink can be copied,
+      an embossing cannot.</p>
+      <p class="lede" style="margin-top:1.2rem">When the hundredth print
+      leaves the gallery, the edition closes — and that image is never
+      printed again. Not for an anniversary. Not for a reissue. Never.</p>
+      <span class="law">The Limited 100 is never discounted</span>
+    </div>
+  </div>
+</section>
+
+<section class="band oxblood">
+  <div class="wrap release">
+    <img src="CAMPAIGN_ASSETS/Beatles_TYLS/enhanced/the-beatles_landscape.jpg" alt="The Beatles, Thank Your Lucky Stars, 1963">
+    <div>
+      <span class="kicker">Current release</span>
+      <h2>The Beatles —<br>Thank Your Lucky Stars</h2>
+      <p class="lede">Twelve months after Decca turned them down, The Beatles
+      walked into a converted cinema in Birmingham to close the show with
+      She Loves You. Britain had already lost its head. America was next.
+      These photographs were taken in that room, on that night — the moment
+      just before the blast radius widened.</p>
+      <div class="venue">Alpha Studios, Birmingham · 15 December 1963</div>
+      <div class="edline">Edition of 100 · 51 remain</div>
+      <a class="btn" href="#">Reserve your number — £149</a>
+    </div>
+  </div>
+</section>
+
+<section class="band charcoal" id="archive">
+  <div class="wrap">
+    <span class="kicker">The Archive</span>
+    <h2>Half a century of rock, photographed from<br>the pit, the wings and the dressing room.</h2>
+    <p class="lede">Many of these images have never been published anywhere.
+    Closed editions remain on display. They are not for sale at any price —
+    that is the point.</p>
+    <div class="grid">
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2020/12/Freddie-Mercury-001.jpg" alt="Freddie Mercury"><div class="name">Freddie Mercury</div><div class="st">Edition of 100 · available</div></a>
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2021/01/David-Bowie-001.jpg" alt="David Bowie"><div class="name">David Bowie</div><div class="st low">Final prints · 7 remain</div></a>
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2020/12/Lemmy-001.jpg" alt="Lemmy"><div class="name">Lemmy</div><div class="st">Edition of 100 · available</div></a>
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2020/12/Ozzy-Osbourne-001.jpg" alt="Ozzy Osbourne"><div class="name">Ozzy Osbourne</div><div class="st low">Final prints · 12 remain</div></a>
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2021/01/Keith-Richards-001-scaled.jpg" alt="Keith Richards"><div class="name">Keith Richards</div><div class="st">Edition of 100 · available</div></a>
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2021/01/Johnny-Cash-001-scaled.jpg" alt="Johnny Cash"><div class="name">Johnny Cash</div><div class="st closed">Edition closed</div></a>
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2020/12/Prince-001.jpg" alt="Prince"><div class="name">Prince</div><div class="st">Edition of 100 · available</div></a>
+      <a class="card" href="#"><img src="https://www.pickart.co.uk/wp-content/uploads/2020/12/Bruce-Dickinson-001-scaled.jpg" alt="Bruce Dickinson"><div class="name">Bruce Dickinson</div><div class="st">Edition of 100 · available</div></a>
+    </div>
+    <div style="text-align:center;margin-top:4rem">
+      <a class="btn" href="#">Browse the full Collection</a>
+    </div>
+  </div>
+</section>
+
+<section class="band moss">
+  <div class="wrap room">
+    <img src="Campaign_Ready/Beatles_TYLS/Paul/Paul Marketing Rework.png" alt="PickArt print framed in a listening room">
+    <div>
+      <span class="kicker">In the room</span>
+      <h2>The soundtrack of your life,<br>on your wall</h2>
+      <p class="lede">These are not posters. At 50 × 50 cm on heavyweight
+      fibre-based paper, a PickArt print carries a room the way a photograph
+      in a gallery does. Hang it above the turntable. Hang it where the
+      guitars are. Hang it where guests will ask about it.</p>
+      <div class="edline">Free worldwide delivery · archival tube, never glass</div>
+      <div class="caption">Shown framed for inspiration. Prints are delivered
+      unframed, rolled in an archival tube, ready to frame your way.</div>
+    </div>
+  </div>
+</section>
+
+<section class="band bone craftband">
+  <img class="watermark" src="CAMPAIGN_ASSETS/Ornate_Pick.png" alt="">
+  <div class="wrap">
+    <span class="kicker">The object</span>
+    <h2>Built to outlast the century</h2>
+    <div class="craft">
+      <div><h3>The paper</h3><p>Platinum Baryta 300 gsm. A heavyweight
+      fibre-based paper with a barium-sulphate coating — the same construction
+      as the silver gelatin papers of the darkroom era. It is the paper museums
+      choose when a photograph is meant to be kept, not replaced.</p></div>
+      <div><h3>The mark</h3><p>Every print is embossed with the PickArt stamp
+      and its edition number, 1 to 100, pressed into the paper itself.
+      Ink can be copied. An embossing cannot.</p></div>
+      <div><h3>The certificate</h3><p>Each print ships with a certificate of
+      authenticity recording the image, the edition and your number
+      within it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band charcoal">
+  <div class="wrap list">
+    <span class="kicker">First refusal</span>
+    <h2>Editions of one hundred do not wait</h2>
+    <p class="lede" style="margin:0 auto">New editions are announced to the
+    list before they appear anywhere else.</p>
+    <form onsubmit="return false"><input type="email" placeholder="Your email">
+    <button>Join the list</button></form>
+    <div class="small">Release announcements only. No noise.</div>
+  </div>
+</section>
+
+<div class="trust"><span>Free worldwide delivery</span><span>Archival tube,
+never glass</span><span>Certificate with every print</span><span>Editions of
+100 — never reprinted, never discounted</span></div>
+
+<footer>
+  <div>
+    <img src="CAMPAIGN_ASSETS/Logo_Master_White_Trans.png" alt="PickArt">
+    <div>Kingfisher Shopping Centre, Redditch,<br>Worcestershire B97 4HJ<br>
+    The archive is held and printed in England.</div>
+  </div>
+  <div>Authenticity<br>Shipping &amp; Delivery<br>Returns<br>Privacy · Terms</div>
+  <div>info@pickart.co.uk<br><br>
+  <span style="font-size:.75rem">Every print in this archive is one of a
+  numbered edition of 100.<br>Editions are never reprinted and never
+  discounted.</span></div>
+</footer>
+</body>
+</html>
